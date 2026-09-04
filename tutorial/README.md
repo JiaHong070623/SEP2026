@@ -1,1 +1,1 @@
-Default page for tutoriol folder
+Default page for activity folder
