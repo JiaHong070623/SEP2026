@@ -1,1 +1,1 @@
-Default page activity folder
+Default page for activity folder
