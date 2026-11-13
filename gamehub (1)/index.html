@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="game.png">
+  <title>Website Design Projects-GameHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo">Game<span>Hub</span></a>
+      <button class="menu-btn" onclick="toggleMenu()">&#9776;</button>
+      <ul id="menu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html" class="cart-link">Cart (<span class="cart-count">0</span>)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>Welcome!</h1>
+      <a href="products.html" class="btn">Shop Now</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <h2 class="title">Shop by Category</h2>
+      <div class="categories">
+        <a class="cat" href="products.html"><div class="icon">🎮</div><h3>Consoles</h3><p>PS5 and PS4</p></a>
+        <a class="cat" href="products.html"><div class="icon">💿</div><h3>Games</h3><p>Top titles for PS5 and PS4</p></a>
+        <a class="cat" href="products.html"><div class="icon">🎧</div><h3>Accessories</h3><p>Controllers and headsets</p></a>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

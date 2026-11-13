@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="game.png">
+
+  <title>Contact - GameHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo">Game<span>Hub</span></a>
+      <button class="menu-btn" onclick="toggleMenu()">&#9776;</button>
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="cart.html" class="cart-link">Cart (<span class="cart-count">0</span>)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 class="title">Contact Us</h2>
+      <form onsubmit="return checkForm()" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your name">
+        <div class="error" id="nameErr"></div>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com">
+        <div class="error" id="emailErr"></div>
+
+        <label for="message">Message</label>
+        <textarea id="message" rows="5" placeholder="How can we help?"></textarea>
+        <div class="error" id="msgErr"></div>
+
+        <button type="submit" class="btn">Send Message</button>
+        <div class="success" id="formResult"></div>
+      </form>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
