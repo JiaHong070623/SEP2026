@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="game.png">
+
+  <title>Shop - GameHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo">Game<span>Hub</span></a>
+      <button class="menu-btn" onclick="toggleMenu()">&#9776;</button>
+      <ul id="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html" class="active">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html" class="cart-link">Cart (<span class="cart-count">0</span>)</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 class="title">Shop All Products</h2>
+      <div class="filters">
+        <button onclick="showProducts('all')">All</button>
+        <button onclick="showProducts('console')">Consoles</button>
+        <button onclick="showProducts('game')">Games</button>
+        <button onclick="showProducts('accessory')">Accessories</button>
+      </div>
+      <div class="grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
