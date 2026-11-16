@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <style>
+        :root {
+            --navy: #0b1530;
+            --indigo: #4f46e5;
+            --blue: #2563eb;
+            --cyan: #06b6d4;
+            --text: #172033;
+            --muted: #64748b;
+            --line: #d5ddea;
+            --error: #b42318;
+            --ok: #067647;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: "Segoe UI",'Times New Roman', Times, serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #0b1530 0%, #1e2a5e 55%, #2b2f8f 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.55;
+            z-index: 0;
+            animation: drift 14s ease-in-out infinite alternate;
+        }
+        body::before {
+            width: 420px; height: 420px;
+            background: var(--cyan);
+            top: -120px; left: -100px;
+        }
+        body::after {
+            width: 480px; height: 480px;
+            background: var(--indigo);
+            bottom: -160px; right: -120px;
+            animation-delay: -6s;
+        }
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(60px, 40px) scale(1.15); }
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            padding: 40px 34px 30px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            animation: rise 0.7s cubic-bezier(.2,.8,.2,1) both;
+            overflow: hidden;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin: 0 0 6px;
+            color: var(--navy);
+        }
+        .sub {
+            text-align: center;
+            color: var(--muted);
+            margin: 0 0 26px;
+            font-size: 0.95rem;
+        }
+
+        form br { display: none; }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 7px;
+        }
+
+        .field { margin-bottom: 18px; }
+        .control { position: relative; }
+
+        .icon {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            width: 20px; height: 20px;
+            stroke: #94a3b8;
+            pointer-events: none;
+            transition: stroke 0.2s;
+        }
+        .control:focus-within .icon { stroke: var(--blue); }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 13px 14px 13px 44px;
+            font-size: 1rem;
+            color: var(--text);
+            background: #f8fafc;
+            border: 1.5px solid var(--line);
+            border-radius: 10px;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        #password { padding-right: 70px; }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            background: #fff;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+        }
+        input.invalid { border-color: var(--error); background: #fef3f2; }
+        input.valid   { border-color: var(--ok); }
+
+        .toggle {
+            position: absolute;
+            right: 8px; top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--blue);
+            font-weight: 600;
+            font-size: 0.82rem;
+            padding: 6px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .toggle:hover { background: #e8efff; }
+        .toggle:focus-visible,
+        input[type="submit"]:focus-visible,
+        .row a:focus-visible,
+        .check input:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, 0.45);
+            outline-offset: 2px;
+        }
+
+        .msg {
+            font-size: 0.84rem;
+            margin: 6px 0 0;
+            min-height: 1.1em;
+            color: var(--error);
+        }
+        .msg.warn { color: #93370d; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 4px 0 22px;
+            font-size: 0.88rem;
+        }
+        .check {
+            display: flex; align-items: center; gap: 8px;
+            margin: 0; font-weight: 400; cursor: pointer;
+        }
+        .check input { width: 16px; height: 16px; accent-color: var(--blue); }
+        .row a { color: var(--blue); font-weight: 600; text-decoration: none; }
+        .row a:hover { text-decoration: underline; }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.02rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--blue), var(--indigo));
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+            transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+        }
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(79, 70, 229, 0.45);
+            filter: brightness(1.06);
+        }
+        input[type="submit"]:active { transform: translateY(0); }
+        input[type="submit"]:disabled {
+            cursor: wait;
+            transform: none;
+            background: linear-gradient(90deg, #6d86e8, #8b84ee, #6d86e8);
+            background-size: 200% 100%;
+            animation: shimmer 1s linear infinite;
+        }
+        @keyframes shimmer {
+            from { background-position: 200% 0; }
+            to   { background-position: 0 0; }
+        }
+
+        .banner {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        .banner.show    { display: block; animation: rise 0.3s both; }
+        .banner.error   { background: #fef3f2; color: var(--error); border: 1px solid #fda29b; }
+        .banner.success { background: #ecfdf3; color: var(--ok); border: 1px solid #75e0a7; }
+
+        @media (max-width: 480px) {
+            .card { padding: 34px 22px 26px; }
+            h2 { font-size: 1.6rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="card">
+
+        <h2>Login Page</h2>
+        <p class="sub">Welcome back! Please sign in to continue.</p>
+
+        <form id="loginForm" novalidate>
+
+            <div id="banner" class="banner" role="alert" aria-live="polite"></div>
+
+            <div class="field">
+                <label for="username">Username:</label><br>
+                <div class="control">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21a8 8 0 0 1 16 0"/>
+                    </svg>
+                    <input type="text" id="username" name="username" autocomplete="username" placeholder="Enter your username">
+                </div>
+                <br><br>
+                <p class="msg" id="usernameMsg"></p>
+            </div>
+
+            <div class="field">
+                <label for="password">Password:</label><br>
+                <div class="control">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="4" y="11" width="16" height="10" rx="2"/>
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                    </svg>
+                    <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter your password">
+                    <button type="button" class="toggle" id="toggle" aria-label="Show password">Show</button>
+                </div>
+                <br><br>
+                <p class="msg" id="passwordMsg"></p>
+            </div>
+
+            <div class="row">
+                <label class="check" for="remember">
+                    <input type="checkbox" id="remember"> Remember my username
+                </label>
+                <a href="#" id="forgot">Forgot password?</a>
+            </div>
+
+            <input type="submit" value="Login" id="submitBtn">
+
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById("loginForm");
+        const usernameEl = document.getElementById("username");
+        const passwordEl = document.getElementById("password");
+        const usernameMsg = document.getElementById("usernameMsg");
+        const passwordMsg = document.getElementById("passwordMsg");
+        const banner = document.getElementById("banner");
+        const toggle = document.getElementById("toggle");
+        const submitBtn = document.getElementById("submitBtn");
+        const remember = document.getElementById("remember");
+
+        try {
+            const saved = localStorage.getItem("rememberedUser");
+            if (saved) { usernameEl.value = saved; remember.checked = true; }
+        } catch (e) { }
+
+        function setState(input, msgEl, message) {
+            msgEl.textContent = message;
+            msgEl.className = "msg";
+            input.classList.toggle("invalid", message !== "");
+            input.classList.toggle("valid", message === "" && input.value !== "");
+            input.setAttribute("aria-invalid", message !== "" ? "true" : "false");
+        }
+
+        function validateUsername() {
+            const v = usernameEl.value.trim();
+            let message = "";
+            if (v === "") message = "Enter your username.";
+            setState(usernameEl, usernameMsg, message);
+            return message === "";
+        }
+
+        function validatePassword() {
+            const v = passwordEl.value;
+            let message = "";
+            if (v === "") message = "Enter your password.";
+            setState(passwordEl, passwordMsg, message);
+            return message === "";
+        }
+
+        function showBanner(type, text) {
+            banner.textContent = text;
+            banner.className = "banner show " + type;
+        }
+
+        usernameEl.addEventListener("blur", validateUsername);
+        passwordEl.addEventListener("blur", validatePassword);
+        usernameEl.addEventListener("input", () => { if (usernameEl.classList.contains("invalid")) validateUsername(); });
+        passwordEl.addEventListener("input", () => { if (passwordEl.classList.contains("invalid")) validatePassword(); });
+
+        toggle.addEventListener("click", () => {
+            const hidden = passwordEl.type === "password";
+            passwordEl.type = hidden ? "text" : "password";
+            toggle.textContent = hidden ? "Hide" : "Show";
+            toggle.setAttribute("aria-label", hidden ? "Hide password" : "Show password");
+        });
+
+        passwordEl.addEventListener("keyup", (e) => {
+            if (e.getModifierState && e.getModifierState("CapsLock")) {
+                passwordMsg.textContent = "Caps Lock is on.";
+                passwordMsg.className = "msg warn";
+            } else if (passwordMsg.classList.contains("warn")) {
+                passwordMsg.textContent = "";
+                passwordMsg.className = "msg";
+            }
+        });
+
+        document.getElementById("forgot").addEventListener("click", (e) => {
+            e.preventDefault();
+            showBanner("error", "Password reset is not available in this demo. Please contact your administrator.");
+        });
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            banner.className = "banner";
+
+            const okUser = validateUsername();
+            const okPass = validatePassword();
+            if (!okUser || !okPass) {
+                (okUser ? passwordEl : usernameEl).focus();
+                showBanner("error", "Please fix the highlighted fields and try again.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.value = "Logging in...";
+
+            setTimeout(() => {
+                const user = usernameEl.value.trim();
+                try {
+                    if (remember.checked) localStorage.setItem("rememberedUser", user);
+                    else localStorage.removeItem("rememberedUser");
+                } catch (err) { }
+                showBanner("success", "Login successful. Welcome, " + user + "!");
+                form.reset();
+                usernameEl.classList.remove("valid");
+                passwordEl.classList.remove("valid");
+                submitBtn.disabled = false;
+                submitBtn.value = "Login";
+            }, 800);
+        });
+    </script>
+
+</body>
+</html>
+
